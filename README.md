@@ -38,7 +38,7 @@ However, it won't detect manual cleanups with an explicit call to `Dispose()`, o
 Having to call `Dispose()` manually implies that the variable leaves its current scope, but passing around types like `SpanOwner<T>` is almost always a bad idea. This is the main reason why `ValueStringBuilder` (an internal type in the BCL) hasn't been exposed publicly, despite requests to do so. If you forget to pass it by reference, whatever handles you have get copied over,
 and `Dispose()` will run as many times as you have copies. 
 
-While `SpanOwner<T>` isn't as dangerous, it will still leak memory if misused. Another reason is that you lose control over the value's lifetime when you pass it around.
+While `SpanOwner<T>` isn't as dangerous, it will still leak memory if misused. Another reason is that you lose control over the value's lifetime when you pass it around:
 ```csharp
 var a = SpanOwner<int>.Allocate(8);
 SetFirst(a);
@@ -49,5 +49,13 @@ Console.WriteLine(b.Span[0]); // Prints 999
 static void SetFirst(SpanOwner<int> a)
 {   
     using(a) { _ = 0; }
+}
+```
+
+The analyzer also doesn't flag potentially dangerous default initializations, such as this:
+```csharp
+static void DoNotDoThis()
+{
+   using SpanOwner<int> a = default; // Throws a NullReferenceException on scope exit.
 }
 ```
