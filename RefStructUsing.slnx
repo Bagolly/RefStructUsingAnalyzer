@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="RefStructUsing/RefStructUsing.CodeFixes/RefStructUsing.CodeFixes.csproj" />
+  <Project Path="RefStructUsing/RefStructUsing.Package/RefStructUsing.Package.csproj" />
+  <Project Path="RefStructUsing/RefStructUsing.Test/RefStructUsing.Test.csproj" />
+  <Project Path="RefStructUsing/RefStructUsing.Vsix/RefStructUsing.Vsix.csproj" />
+  <Project Path="RefStructUsing/RefStructUsing/RefStructUsing.csproj" />
+</Solution>
